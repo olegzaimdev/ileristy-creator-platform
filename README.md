@@ -100,7 +100,11 @@ The browser redirect is never treated as proof of payment.
 - Neon for hosted environments
 - Docker Compose for local development
 - Testcontainers for integration tests
-- GitHub Actions for CI
+- GitHub Actions for CI/CD, GHCR for backend images
+- Vercel for the web app and PR previews
+- Trivy and Dependabot for security scanning and dependency updates
+
+The delivery pipeline (PR checks, staging, approval-gated production, controlled Liquibase migrations) is described in [docs/ci-cd.md](docs/ci-cd.md).
 
 ### Integrations
 
@@ -159,7 +163,10 @@ ileristy-creator-platform/
 ├── services/
 │   ├── core-api/
 │   └── ai-worker/
+├── .github/
+│   └── workflows/
 ├── docs/
+│   ├── ci-cd.md
 │   ├── adr/
 │   ├── diagrams/
 │   └── product/
@@ -232,6 +239,8 @@ Architecture Decision Records are kept in `docs/adr`. The initial set will docum
 
 - [ ] Finalize the PostgreSQL schema and Liquibase baseline
 - [ ] Scaffold the Spring Boot API and Next.js application
+- [ ] Deliver the first vertical slice: Next.js → Spring Boot → PostgreSQL
+- [ ] Add CI/CD: PR checks, Docker image, staging and approval-gated production ([plan](docs/ci-cd.md))
 - [ ] Implement contacts, catalogue, and cohorts
 - [ ] Implement orders and server-side pricing
 - [ ] Add Stripe Checkout and idempotent webhooks
