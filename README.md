@@ -83,8 +83,8 @@ The browser redirect is never treated as proof of payment.
 
 ### Core API
 
-- Java 21
-- Spring Boot 3.5
+- Java 25
+- Spring Boot 4.1
 - Spring MVC
 - Spring Data JPA / Hibernate
 - Bean Validation
@@ -183,7 +183,7 @@ The commands below describe the target workflow and will become executable as th
 
 ### Prerequisites
 
-- JDK 21
+- JDK 25
 - Docker with Docker Compose
 - Node.js LTS
 - Maven, or the included Maven Wrapper once generated
