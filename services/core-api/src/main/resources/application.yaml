@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ileristy-core-api
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/ileristy}
+    username: ${DATABASE_USERNAME:ileristy}
+    password: ${DATABASE_PASSWORD:ileristy}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
