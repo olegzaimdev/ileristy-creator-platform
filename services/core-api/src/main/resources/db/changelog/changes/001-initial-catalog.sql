@@ -1,66 +1,64 @@
-create table contact
+CREATE TABLE contact
 (
-    id                bigint generated always as identity primary key,
-    first_name        varchar(255) not null,
-    last_name         varchar(255),
-    email             varchar(255) not null,
-    phone_number      varchar(255),
-    origin            varchar(255) not null,
-    marketing_consent boolean not null default false,
-    marketing_consent_at timestamptz,
-    marketing_consent_withdrawn_at timestamptz,
-    created_at        timestamptz  not null DEFAULT now(),
-    updated_at        timestamptz  not null DEFAULT now(),
+    id                             BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    first_name                     VARCHAR(255) NOT NULL,
+    last_name                      VARCHAR(255),
+    email                          VARCHAR(255) NOT NULL,
+    phone_number                   VARCHAR(255),
+    origin                         VARCHAR(255) NOT NULL,
+    marketing_consent              BOOLEAN      NOT NULL DEFAULT FALSE,
+    marketing_consent_at           TIMESTAMPTZ,
+    marketing_consent_withdrawn_at TIMESTAMPTZ,
+    created_at                     TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    updated_at                     TIMESTAMPTZ  NOT NULL DEFAULT now(),
 
     CONSTRAINT chk_contact_marketing_consent
-        CHECK (
-            marketing_consent = false
-                OR marketing_consent_at IS NOT NULL
-            )
+        CHECK (marketing_consent = FALSE OR marketing_consent_at IS NOT NULL)
 );
 
 CREATE UNIQUE INDEX uq_contact_email_lower
     ON contact (lower(email));
 
-create table course
+CREATE TABLE course
 (
-    id          bigint generated always as identity primary key,
-    slug        varchar(50)  not null,
-    name        varchar(255) not null,
-    description text         not null,
-    created_at timestamptz NOT NULL DEFAULT now(),
-    updated_at timestamptz NOT NULL DEFAULT now()
+    id          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    slug        VARCHAR(50)  NOT NULL,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT         NOT NULL,
+    created_at  TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMPTZ  NOT NULL DEFAULT now()
 );
 
 CREATE UNIQUE INDEX uq_slug
     ON course (lower(slug));
 
-create table course_package
+CREATE TABLE course_package
 (
-    id          bigint generated always as identity primary key,
-    name        varchar(255) not null,
-    price_amount_minor bigint NOT NULL CHECK (price_amount_minor > 0),
-    currency    CHAR(3) not null check(currency~ '^[A-Z]{3}$'),
-    code varchar(50) not null,
-    course_id   bigint not null references course(id) on delete restrict,
-    description text,
-    active boolean NOT NULL DEFAULT true,
-    created_at timestamptz NOT NULL DEFAULT now(),
-    updated_at timestamptz NOT NULL DEFAULT now()
+    id                 BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name               VARCHAR(255) NOT NULL,
+    price_amount_minor BIGINT       NOT NULL CHECK (price_amount_minor > 0),
+    currency           CHAR(3)      NOT NULL CHECK (currency ~ '^[A-Z]{3}$'),
+    code               VARCHAR(50)  NOT NULL,
+    course_id          BIGINT       NOT NULL REFERENCES course (id) ON DELETE RESTRICT,
+    description        TEXT,
+    active             BOOLEAN      NOT NULL DEFAULT TRUE,
+    created_at         TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    updated_at         TIMESTAMPTZ  NOT NULL DEFAULT now()
 );
 
 CREATE UNIQUE INDEX uq_course_package_course_code
     ON course_package (course_id, lower(code));
 
-create table cohort
+CREATE TABLE cohort
 (
-    id         bigint generated always as identity primary key,
-    course_id  bigint      NOT NULL REFERENCES course (id) ON DELETE RESTRICT,
-    starts_at timestamptz not null,
-    ends_at   timestamptz not null,
-    capacity  integer     not null,
-    created_at timestamptz NOT NULL DEFAULT now(),
-    updated_at timestamptz NOT NULL DEFAULT now(),
+    id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    course_id  BIGINT      NOT NULL REFERENCES course (id) ON DELETE RESTRICT,
+    starts_at  TIMESTAMPTZ NOT NULL,
+    ends_at    TIMESTAMPTZ NOT NULL,
+    capacity   INTEGER     NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+
     CONSTRAINT chk_cohort_dates
         CHECK (ends_at > starts_at),
 
