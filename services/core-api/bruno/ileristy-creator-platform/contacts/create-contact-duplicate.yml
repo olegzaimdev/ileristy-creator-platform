@@ -1,0 +1,48 @@
+info:
+  name: Create Contact - Duplicate Email
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/contacts"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "email": "{{contactEmail}}",
+        "contactOrigin": "DIRECT",
+        "marketingConsent": false
+      }
+  auth: inherit
+
+docs: |-
+  Run "Create Contact" first: this request reuses its `contactEmail` (upper-cased to check case-insensitive matching).
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const email = bru.getVar("contactEmail");
+        if (!email) {
+          throw new Error("contactEmail is not set - run 'Create Contact' first");
+        }
+        bru.setVar("contactEmail", email.toUpperCase());
+    - type: after-response
+      code: |-
+        bru.setVar("contactEmail", bru.getVar("contactEmail").toLowerCase());
+    - type: tests
+      code: |-
+        test("returns 409 problem detail", function () {
+          expect(res.status).to.equal(409);
+          expect(res.body.status).to.equal(409);
+          expect(res.body.title).to.equal("Conflict");
+        });
+
+settings:
+  encodeUrl: true

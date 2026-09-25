@@ -1,0 +1,17 @@
+opencollection: 1.0.0
+
+info:
+  name: ileristy-creator-platform
+
+request:
+  variables:
+    - name: baseUrl
+      value: http://localhost:8080
+      description: Fallback when no environment is selected; environments override it
+
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
