@@ -24,9 +24,18 @@ public record CreateContactRequest(
         String phoneNumber,
 
         @NotNull
-        ContactOrigin contactOrigin,
+        ContactOrigin origin,
 
         boolean marketingConsent
 ) {
+        public CreateContactRequest {
+                firstName = trim(firstName);
+                lastName = trim(lastName);
+                email = trim(email);
+                phoneNumber = trim(phoneNumber);
+        }
 
+        private static String trim(String value) {
+                return value == null ? null : value.trim();
+        }
 }

@@ -16,7 +16,7 @@ http:
         "firstName": "Jane",
         "lastName": "Doe",
         "email": "{{contactEmail}}",
-        "contactOrigin": "DIRECT",
+        "origin": "DIRECT",
         "marketingConsent": false
       }
   auth: inherit

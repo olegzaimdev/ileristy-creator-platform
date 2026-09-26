@@ -29,7 +29,7 @@ public class ContactService {
                 request.lastName(),
                 normalizedEmail,
                 request.phoneNumber(),
-                request.contactOrigin(),
+                request.origin(),
                 request.marketingConsent()
         );
 
