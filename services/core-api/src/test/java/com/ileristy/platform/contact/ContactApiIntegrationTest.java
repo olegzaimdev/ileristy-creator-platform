@@ -12,6 +12,8 @@ import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -67,5 +69,67 @@ class ContactApiIntegrationTest {
 
         // Assert persistence
         assertThat(contactRepository.count()).isEqualTo(1);
+
+        List<Contact> contacts = contactRepository.findAll();
+
+        Contact savedContact = contacts.getFirst();
+
+        assertThat(savedContact.getId()).isNotNull();
+        assertThat(savedContact.getFirstName()).isEqualTo("Jane");
+        assertThat(savedContact.getLastName()).isEqualTo("Stark");
+        assertThat(savedContact.getEmail()).isEqualTo("jane@example.com");
+        assertThat(savedContact.getOrigin()).isEqualTo(ContactOrigin.INSTAGRAM);
+    }
+
+    @Test
+    void shouldRejectDuplicateEmailIgnoringCase() throws Exception {
+        // Arrange
+        String firstRequest = """
+                {
+                  "firstName": "Jane",
+                  "lastName": "Stark",
+                  "email": "jane@example.com",
+                  "phoneNumber": "+359888123456",
+                  "origin": "INSTAGRAM",
+                  "marketingConsent": true
+                }
+                """;
+
+        String duplicateRequest = """
+                {
+                  "firstName": "Another",
+                  "lastName": "Person",
+                  "email": "JANE@EXAMPLE.COM",
+                  "origin": "DIRECT",
+                  "marketingConsent": false
+                }
+                """;
+
+        mockMvc.perform(
+                post("/api/contacts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(firstRequest)
+        ).andExpect(status().isCreated());
+
+
+        mockMvc.perform(
+                        post("/api/contacts")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(duplicateRequest)
+                )
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.title").value("Contact already exists"));
+
+        // Assert persistence
+        assertThat(contactRepository.count()).isEqualTo(1);
+
+        List<Contact> contacts = contactRepository.findAll();
+
+        Contact savedContact = contacts.getFirst();
+
+        assertThat(savedContact.getFirstName()).isEqualTo("Jane");
+        assertThat(savedContact.getEmail()).isEqualTo("jane@example.com");
+        assertThat(savedContact.getOrigin()).isEqualTo(ContactOrigin.INSTAGRAM);
     }
 }
