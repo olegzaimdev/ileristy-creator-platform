@@ -1,5 +1,5 @@
 import { LandingPage } from "@/features/landing/components/LandingPage";
 
-export default function Home() {
+export default function DesignPreviewPage() {
   return <LandingPage />;
 }

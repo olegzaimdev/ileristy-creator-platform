@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Brand tokens live in features/landing/styles/tokens.css (scoped to `.ileristy`,
+ * which the root layout puts on <body>). The palette is mirrored here so
+ * Tailwind utilities (bg-ivory, text-espresso, font-serif…) stay on-brand —
+ * keep both files in sync.
+ */
+@theme {
+  --color-ivory: #f7f2ec;
+  --color-cream: #fbf8f4;
+  --color-blush: #f3d9dc;
+  --color-dusty-pink: #e8b8be;
+  --color-taupe: #b5a69d;
+  --color-espresso: #3a302d;
+  --color-charcoal: #252323;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  background: #f7f2ec;
 }
