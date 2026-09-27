@@ -132,4 +132,26 @@ class ContactApiIntegrationTest {
         assertThat(savedContact.getEmail()).isEqualTo("jane@example.com");
         assertThat(savedContact.getOrigin()).isEqualTo(ContactOrigin.INSTAGRAM);
     }
+
+    @Test
+    void shouldRejectInvalidEmail() throws Exception {
+        // Arrange
+        String requestBody = """
+                {
+                  "firstName": " Jane ",
+                  "lastName": "Stark",
+                  "email": " incorrect-email ",
+                  "phoneNumber": "+359888123456",
+                  "origin": "INSTAGRAM",
+                  "marketingConsent": true
+                }
+                """;
+        mockMvc.perform(      post("/api/contacts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody)
+        ).andExpect(status().isBadRequest());
+
+
+        assertThat(contactRepository.count()).isZero();
+    }
 }
