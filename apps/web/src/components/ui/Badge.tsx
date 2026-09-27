@@ -7,10 +7,10 @@ export function Badge({ tone = "blush", children, className }: BadgeProps) {
 }
 
 /** Marks illustrative data that must be verified before launch. */
-export function SampleTag() {
+export function SampleTag({ label, title }: { label: string; title?: string }) {
   return (
-    <span className="sample-tag" title="Примерни данни — ще бъдат заменени с потвърдени">
-      пример
+    <span className="sample-tag" title={title}>
+      {label}
     </span>
   );
 }

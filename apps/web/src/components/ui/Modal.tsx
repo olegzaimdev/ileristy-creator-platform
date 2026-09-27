@@ -3,10 +3,10 @@
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { Icon } from "./Icon";
 
-type ModalProps = { open: boolean; onClose: () => void; title: string; eyebrow?: string; children: ReactNode };
+type ModalProps = { open: boolean; onClose: () => void; title: string; closeLabel: string; eyebrow?: string; children: ReactNode };
 
 /* Native <dialog>: focus trap, Esc and inert background come from the platform. */
-export function Modal({ open, onClose, title, eyebrow, children }: ModalProps) {
+export function Modal({ open, onClose, title, closeLabel, eyebrow, children }: ModalProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
 
@@ -28,7 +28,7 @@ export function Modal({ open, onClose, title, eyebrow, children }: ModalProps) {
       }}
     >
       <div className="modal__panel">
-        <button type="button" className="modal__close" onClick={onClose} aria-label="Затвори">
+        <button type="button" className="modal__close" onClick={onClose} aria-label={closeLabel}>
           <Icon name="close" size={22} />
         </button>
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}

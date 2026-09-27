@@ -1,10 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { metrics, reviews } from "../../content";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Icon, ReviewCard, SectionTitle, StatCard } from "@/components/ui";
+import type { LandingDictionary } from "../../types";
 
-export function Testimonials() {
+type TestimonialsProps = {
+  t: LandingDictionary["results"];
+  reviewLabels: { thread: string; photoAlt: string };
+  sample: ReactNode;
+};
+
+export function Testimonials({ t, reviewLabels, sample }: TestimonialsProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [edges, setEdges] = useState({ start: true, end: false });
 
@@ -32,25 +38,25 @@ export function Testimonials() {
     <section id="results" className="results section" aria-labelledby="results-title">
       <div className="page-container">
         <div className="results__head">
-          <SectionTitle id="results-title" index="07" eyebrow="Социално доказателство" title="Резултати на ученичките" script="истории, които вдъхновяват" />
+          <SectionTitle id="results-title" index="07" eyebrow={t.eyebrow} title={t.title} script={t.script} />
           <div className="slider-controls">
-            <button type="button" className="icon-button" onClick={() => scrollBy(-1)} disabled={edges.start} aria-label="Предишна история">
+            <button type="button" className="icon-button" onClick={() => scrollBy(-1)} disabled={edges.start} aria-label={t.prev}>
               <Icon name="arrow-left" size={20} />
             </button>
-            <button type="button" className="icon-button" onClick={() => scrollBy(1)} disabled={edges.end} aria-label="Следваща история">
+            <button type="button" className="icon-button" onClick={() => scrollBy(1)} disabled={edges.end} aria-label={t.next}>
               <Icon name="arrow-right" size={20} />
             </button>
           </div>
         </div>
         <dl className="metrics">
-          {metrics.map((metric) => (
-            <StatCard key={metric.label} {...metric} />
+          {t.metrics.map((metric) => (
+            <StatCard key={metric.label} value={metric.value} label={metric.label} tag={metric.sample ? sample : undefined} />
           ))}
         </dl>
       </div>
-      <div ref={trackRef} className="results__track" onScroll={updateEdges} role="region" aria-label="Истории на ученички — превърти хоризонтално" tabIndex={0}>
-        {reviews.map((review) => (
-          <ReviewCard key={review.handle} review={review} />
+      <div ref={trackRef} className="results__track" onScroll={updateEdges} role="region" aria-label={t.trackLabel} tabIndex={0}>
+        {t.reviews.map((review) => (
+          <ReviewCard key={review.handle} review={review} labels={reviewLabels} tag={sample} />
         ))}
       </div>
     </section>

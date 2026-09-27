@@ -16,7 +16,10 @@ import {
   StatCard,
   Textarea,
 } from "@/components/ui";
-import { modules, packages, reviews } from "@/features/landing/content";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { getLandingDictionary } from "@/features/landing/i18n";
+import { getDictionary, getLocale } from "@/i18n/dictionaries";
+import { plural } from "@/i18n/format";
 import { ModalDemo } from "./ModalDemo";
 
 const colors = [
@@ -47,7 +50,13 @@ const tokenGroups: [string, string[]][] = [
   ["Breakpoints", ["1440 desktop", "1280 laptop", "1024 tablet landscape", "768 tablet", "390 mobile"]],
 ];
 
-export function DesignSystem() {
+export async function DesignSystem() {
+  const [locale, common, landing] = await Promise.all([getLocale(), getDictionary(), getLandingDictionary()]);
+  const { packages } = landing.pricing;
+  const modules = landing.modules.items;
+  const reviews = landing.results.reviews;
+  const sample = <SampleTag label={common.ui.sample.label} title={common.ui.sample.title} />;
+
   return (
     <main className="ds page-container">
       <header className="ds__intro">
@@ -137,7 +146,8 @@ export function DesignSystem() {
         <div className="ds__row">
           <Badge>Препоръчан</Badge>
           <Badge tone="outline">PRO · PREMIUM</Badge>
-          <SampleTag />
+          {sample}
+          <LanguageSwitcher current={locale} label={common.language.label} />
         </div>
       </section>
 
@@ -202,8 +212,8 @@ export function DesignSystem() {
         <div className="ds__cards">
           <CourseCard icon="practice" title="Практика" text="Реални задачи още по време на курса." index={2} />
           <dl className="stats">
-            <StatCard value="4+" label="години опит" sample />
-            <StatCard value="100+" label="бранда" sample />
+            <StatCard value="4+" label="години опит" tag={sample} />
+            <StatCard value="100+" label="бранда" tag={sample} />
           </dl>
         </div>
         <div className="ds__pricing">
@@ -217,8 +227,8 @@ export function DesignSystem() {
               badge={pkg.badge}
               featured={pkg.featured}
               accent={pkg.accent}
-              price="Цената предстои"
-              priceNote="Еднократно плащане · EUR"
+              price={landing.pricing.price}
+              priceNote={landing.pricing.priceNote}
               action={
                 <Button variant={pkg.featured ? "primary" : "secondary"} block arrow>
                   {pkg.cta}
@@ -229,7 +239,7 @@ export function DesignSystem() {
         </div>
         <div className="ds__reviews">
           {reviews.slice(0, 3).map((review) => (
-            <ReviewCard key={review.handle} review={review} />
+            <ReviewCard key={review.handle} review={review} labels={common.ui.review} tag={sample} />
           ))}
         </div>
       </section>
@@ -241,9 +251,14 @@ export function DesignSystem() {
             <p>Използва се за ЧЗВ, сравнения и всякакво съдържание при поискване.</p>
           </AccordionItem>
         </div>
-        <ModuleAccordion modules={modules.slice(0, 3)} name="ds-modules" />
+        <ModuleAccordion
+          modules={modules.slice(0, 3)}
+          name="ds-modules"
+          labels={common.ui.module}
+          lessonCount={(count) => `${count} ${plural(locale, count, common.ui.module.lessons)}`}
+        />
         <div className="ds__row">
-          <ModalDemo />
+          <ModalDemo closeLabel={common.ui.close} />
         </div>
       </section>
     </main>

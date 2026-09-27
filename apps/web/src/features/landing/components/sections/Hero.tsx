@@ -1,47 +1,40 @@
-import { hero } from "../../content";
-import { Button, Icon, ImageCard, SampleTag, Script } from "@/components/ui";
+import type { ReactNode } from "react";
+import { Button, Icon, ImageCard, Script } from "@/components/ui";
+import type { LandingDictionary } from "../../types";
 
-export function Hero() {
+export function Hero({ t, sample }: { t: LandingDictionary["hero"]; sample: ReactNode }) {
+  const [first, middle, last] = t.title;
   return (
     <section className="hero page-container" aria-labelledby="hero-title">
       <div className="hero__media">
         <div className="hero__backdrop" aria-hidden="true" />
-        <ImageCard
-          className="hero__portrait"
-          alt="Валерия в светла студийна обстановка, държи телефон за снимане"
-          caption="Фото · портрет на Валерия"
-          tone="blush"
-          shape="arch"
-          ratio="4 / 5.3"
-          priority
-          parallax
-        />
-        <ImageCard className="hero__detail" alt="Детайл: ръце с телефон и кафе на бюрото" tone="taupe" shape="circle" ratio="1" mono />
+        <ImageCard className="hero__portrait" alt={t.portrait.alt} caption={t.portrait.caption} tone="blush" shape="arch" ratio="4 / 5.3" priority parallax />
+        <ImageCard className="hero__detail" alt={t.detailAlt} tone="taupe" shape="circle" ratio="1" mono />
         <Script className="hero__signature" size="lg">
-          content creator
+          {t.signature}
         </Script>
         <p className="hero__vertical" aria-hidden="true">
-          Vol. 01 — Creator education
+          {t.vertical}
         </p>
       </div>
 
       <div className="hero__copy">
         <p className="eyebrow">
           <Icon name="sparkle" size={12} className="eyebrow__star" />
-          {hero.label}
+          {t.label}
         </p>
         <h1 id="hero-title" className="hero__title">
-          <span className="hero__line hero__line--italic">Стани</span>
-          <span className="hero__line hero__line--big">SMM & UGC</span>
-          <span className="hero__line hero__line--indent">експерт</span>
+          <span className="hero__line hero__line--italic">{first}</span>
+          <span className="hero__line hero__line--big">{middle}</span>
+          <span className="hero__line hero__line--indent">{last}</span>
         </h1>
-        <p className="hero__lead">{hero.lead}</p>
+        <p className="hero__lead">{t.lead}</p>
         <div className="hero__actions">
           <Button href="#pricing" size="lg" arrow>
-            Избери пакет
+            {t.primaryCta}
           </Button>
           <Button href="#program" size="lg" variant="secondary">
-            Виж програмата
+            {t.secondaryCta}
           </Button>
         </div>
         <div className="hero__proof">
@@ -52,8 +45,8 @@ export function Hero() {
             <span className="avatar avatar--more">+</span>
           </div>
           <p>
-            <strong>{hero.proof.value}</strong> {hero.proof.text}
-            {hero.proof.sample && <SampleTag />}
+            <strong>{t.proof.value}</strong> {t.proof.text}
+            {t.proof.sample && sample}
           </p>
         </div>
       </div>

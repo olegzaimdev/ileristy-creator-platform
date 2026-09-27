@@ -9,8 +9,25 @@ export type Module = {
   materials: string[];
 };
 
+export type ModuleAccordionLabels = {
+  label: string;
+  lessonsTitle: string;
+  time: string;
+  video: string;
+  homework: string;
+  materials: string;
+};
+
+type ModuleAccordionProps = {
+  modules: Module[];
+  labels: ModuleAccordionLabels;
+  /** Localised lesson count, e.g. `(n) => \`${n} уроки\``. */
+  lessonCount: (count: number) => string;
+  name?: string;
+};
+
 /** Course programme: an exclusive accordion, one module open at a time. */
-export function ModuleAccordion({ modules, name = "modules" }: { modules: Module[]; name?: string }) {
+export function ModuleAccordion({ modules, labels, lessonCount, name = "modules" }: ModuleAccordionProps) {
   return (
     <div className="module-list">
       {modules.map((module, i) => (
@@ -22,16 +39,16 @@ export function ModuleAccordion({ modules, name = "modules" }: { modules: Module
           bodyClassName="module__body"
           title={
             <>
-              <span className="module__number">Модул {module.number}</span>
+              <span className="module__number">{labels.label} {module.number}</span>
               <span className="module__title">{module.title}</span>
               <span className="module__meta">
-                {module.lessons.length} урока · {module.duration}
+                {lessonCount(module.lessons.length)} · {module.duration}
               </span>
             </>
           }
         >
           <div>
-            <h4>Уроци</h4>
+            <h4>{labels.lessonsTitle}</h4>
             <ol>
               {module.lessons.map((lesson) => (
                 <li key={lesson}>{lesson}</li>
@@ -39,15 +56,15 @@ export function ModuleAccordion({ modules, name = "modules" }: { modules: Module
             </ol>
           </div>
           <div>
-            <h4>Време</h4>
-            <p>{module.duration} видео</p>
+            <h4>{labels.time}</h4>
+            <p>{module.duration} {labels.video}</p>
           </div>
           <div>
-            <h4>Домашна задача</h4>
+            <h4>{labels.homework}</h4>
             <p>{module.homework}</p>
           </div>
           <div>
-            <h4>Материали</h4>
+            <h4>{labels.materials}</h4>
             <ul>
               {module.materials.map((material) => (
                 <li key={material}>{material}</li>

@@ -1,4 +1,4 @@
-import { SampleTag } from "./Badge";
+import type { ReactNode } from "react";
 import { ImageCard, type ImageTone } from "./ImageCard";
 
 export type Review =
@@ -20,13 +20,20 @@ function Author({ name, handle }: { name: string; handle: string }) {
   );
 }
 
-export function ReviewCard({ review }: { review: Review }) {
+type ReviewCardProps = {
+  review: Review;
+  labels: { thread: string; photoAlt: string };
+  /** Optional marker, e.g. a SampleTag for unverified stories. */
+  tag?: ReactNode;
+};
+
+export function ReviewCard({ review, labels, tag }: ReviewCardProps) {
   if (review.kind === "photo") {
     return (
       <article className="review review--photo">
-        <ImageCard alt={`Снимка на ${review.name}`} tone={review.tone} ratio="3 / 4" shape="soft" />
+        <ImageCard alt={labels.photoAlt.replace("{name}", review.name)} tone={review.tone} ratio="3 / 4" shape="soft" />
         <div className="review__overlay">
-          <SampleTag />
+          {tag}
           <p className="review__metric">{review.metric}</p>
           <p className="review__caption">{review.caption}</p>
           <Author name={review.name} handle={review.handle} />
@@ -40,9 +47,9 @@ export function ReviewCard({ review }: { review: Review }) {
       <article className="review review--chat">
         <header className="review__chat-head">
           <Author name={review.name} handle={review.handle} />
-          <SampleTag />
+          {tag}
         </header>
-        <ol className="review__thread" aria-label="Разговор">
+        <ol className="review__thread" aria-label={labels.thread}>
           {review.messages.map((message, i) => (
             <li key={i} className={`bubble bubble--${message.from}`}>
               {message.text}
@@ -60,7 +67,7 @@ export function ReviewCard({ review }: { review: Review }) {
         <span className="review__mark" aria-hidden="true">
           “
         </span>
-        <SampleTag />
+        {tag}
       </div>
       <blockquote className="review__quote">{review.quote}</blockquote>
       {review.metric && <p className="review__metric">{review.metric}</p>}

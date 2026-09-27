@@ -2,30 +2,35 @@
 
 import { useState } from "react";
 import { Button, Modal, Script } from "@/components/ui";
-import type { Package } from "../content";
+import type { LandingDictionary, Package } from "../types";
+
+type EnrollDialogProps = {
+  pkg: Package;
+  t: LandingDictionary["enroll"];
+  closeLabel: string;
+  variant?: "primary" | "secondary" | "inverse";
+};
 
 /* Enrollment is not open yet: the CTA explains the next step instead of faking a checkout. */
-export function EnrollDialog({ pkg, label, variant = "primary" }: { pkg: Package; label: string; variant?: "primary" | "secondary" | "inverse" }) {
+export function EnrollDialog({ pkg, t, closeLabel, variant = "primary" }: EnrollDialogProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <Button variant={variant} block arrow onClick={() => setOpen(true)} aria-haspopup="dialog">
-        {label}
+        {pkg.cta}
       </Button>
-      <Modal open={open} onClose={() => setOpen(false)} eyebrow={`${pkg.code} · ${pkg.descriptor}`} title="Записването скоро отваря">
-        <p className="modal__text">
-          Подготвяме следващия поток. Датата, цената и срокът на достъп ще бъдат публикувани тук, преди да започне записването.
-        </p>
+      <Modal open={open} onClose={() => setOpen(false)} closeLabel={closeLabel} eyebrow={`${pkg.code} · ${pkg.descriptor}`} title={t.title}>
+        <p className="modal__text">{t.text}</p>
         <Script className="modal__script" size="md">
-          твоят нов етап
+          {t.script}
         </Script>
         <div className="modal__actions">
           <Button href="https://t.me/" variant="primary" arrow>
-            Следи новините в Telegram
+            {t.telegram}
           </Button>
           <Button variant="secondary" onClick={() => setOpen(false)}>
-            Назад към пакетите
+            {t.back}
           </Button>
         </div>
       </Modal>

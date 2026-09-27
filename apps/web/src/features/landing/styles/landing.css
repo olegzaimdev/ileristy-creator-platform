@@ -46,6 +46,7 @@
     }
 
     .site-nav {
+      margin-inline: auto;
       display: flex;
       gap: clamp(1rem, 2vw, 2.25rem);
     }
@@ -158,6 +159,9 @@
     .mobile-menu__foot {
       display: grid;
       gap: var(--space-5);
+    }
+    .mobile-menu__foot .lang-switch {
+      justify-self: start;
     }
 
     /* ================================================================
@@ -1140,7 +1144,7 @@
         display: block;
       }
 
-      .site-header__cta {
+      .site-header__lang {
         margin-left: auto;
       }
 
@@ -1257,6 +1261,9 @@
     /* 390 mobile — its own composition, not a scaled-down desktop */
     @media (max-width: 640px) {
       .site-header__cta {
+        display: none;
+      }
+      .site-header__lang {
         display: none;
       }
 

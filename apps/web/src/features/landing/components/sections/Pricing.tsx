@@ -1,21 +1,16 @@
 import { AccordionItem, Icon, PricingCard, SectionTitle } from "@/components/ui";
-import { comparison, packages } from "../../content";
+import type { LandingDictionary } from "../../types";
 import { EnrollDialog } from "../EnrollDialog";
 
-export function Pricing() {
+type PricingProps = { t: LandingDictionary["pricing"]; enroll: LandingDictionary["enroll"]; closeLabel: string };
+
+export function Pricing({ t, enroll, closeLabel }: PricingProps) {
   return (
     <section id="pricing" className="pricing section" aria-labelledby="pricing-title">
       <div className="page-container">
-        <SectionTitle
-          id="pricing-title"
-          index="06"
-          eyebrow="Пакети"
-          title="Избери своя формат"
-          lead="Избери формата на обучение, който е точно за теб. Всеки следващ пакет включва всичко от предишния."
-          align="center"
-        />
+        <SectionTitle id="pricing-title" index="06" eyebrow={t.eyebrow} title={t.title} lead={t.lead} align="center" />
         <div className="pricing__grid">
-          {packages.map((pkg) => (
+          {t.packages.map((pkg) => (
             <PricingCard
               key={pkg.code}
               name={pkg.code}
@@ -25,20 +20,20 @@ export function Pricing() {
               badge={pkg.badge}
               featured={pkg.featured}
               accent={pkg.accent}
-              price="Цената предстои"
-              priceNote="Еднократно плащане · EUR"
-              action={<EnrollDialog pkg={pkg} variant={pkg.featured ? "primary" : "secondary"} label={pkg.cta} />}
+              price={t.price}
+              priceNote={t.priceNote}
+              action={<EnrollDialog pkg={pkg} t={enroll} closeLabel={closeLabel} variant={pkg.featured ? "primary" : "secondary"} />}
             />
           ))}
         </div>
 
-        <AccordionItem className="comparison" title={<span>Сравни START, PRO и PREMIUM</span>}>
-          <div className="comparison__scroll" role="region" aria-label="Сравнение на пакетите" tabIndex={0}>
+        <AccordionItem className="comparison" title={<span>{t.compareTitle}</span>}>
+          <div className="comparison__scroll" role="region" aria-label={t.compareRegion} tabIndex={0}>
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Какво получаваш</th>
-                  {packages.map((pkg) => (
+                  <th scope="col">{t.compareHead}</th>
+                  {t.packages.map((pkg) => (
                     <th key={pkg.code} scope="col">
                       {pkg.code}
                     </th>
@@ -46,13 +41,13 @@ export function Pricing() {
                 </tr>
               </thead>
               <tbody>
-                {comparison.map(({ row, includes }) => (
+                {t.comparison.map(({ row, includes }) => (
                   <tr key={row}>
                     <th scope="row">{row}</th>
                     {includes.map((included, i) => (
                       <td key={i}>
                         {included ? <Icon name="check" size={18} /> : <span className="comparison__dash">—</span>}
-                        <span className="visually-hidden">{included ? "Включено" : "Не е включено"}</span>
+                        <span className="visually-hidden">{included ? t.included : t.notIncluded}</span>
                       </td>
                     ))}
                   </tr>

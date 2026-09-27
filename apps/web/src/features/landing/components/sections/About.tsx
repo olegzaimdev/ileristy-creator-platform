@@ -1,29 +1,30 @@
-import { Stats } from "./Stats";
+import type { ReactNode } from "react";
 import { ImageCard, Script, SectionTitle } from "@/components/ui";
+import type { LandingDictionary } from "../../types";
+import { Stats } from "./Stats";
 
-export function About() {
+type AboutProps = { t: LandingDictionary["about"]; stats: LandingDictionary["stats"]; sample: ReactNode };
+
+export function About({ t, stats, sample }: AboutProps) {
   return (
     <section id="about" className="about section page-container" aria-labelledby="about-title">
       <div className="about__collage">
-        <ImageCard className="about__portrait" alt="Портрет на Валерия" caption="Портрет" tone="rose" shape="arch" ratio="3 / 4" parallax />
-        <ImageCard className="about__lifestyle" alt="Валерия пътува с камера в ръка" caption="Lifestyle" tone="taupe" shape="rounded" ratio="4 / 5" mono />
-        <ImageCard className="about__work" alt="Валерия снима продукт на статив" caption="Зад кадър" tone="ivory" shape="soft" ratio="5 / 4" />
+        <ImageCard className="about__portrait" alt={t.portrait.alt} caption={t.portrait.caption} tone="rose" shape="arch" ratio="3 / 4" parallax />
+        <ImageCard className="about__lifestyle" alt={t.lifestyle.alt} caption={t.lifestyle.caption} tone="taupe" shape="rounded" ratio="4 / 5" mono />
+        <ImageCard className="about__work" alt={t.work.alt} caption={t.work.caption} tone="ivory" shape="soft" ratio="5 / 4" />
       </div>
 
       <div className="about__copy">
-        <SectionTitle id="about-title" index="01" eyebrow="Запознанство" title="За мен" script="създавам. обучавам. вдъхновявам." />
-        <p className="lead reveal">Здравей, аз съм Валерия — контент криейтър, SMM специалист и видеограф.</p>
+        <SectionTitle id="about-title" index="01" eyebrow={t.eyebrow} title={t.title} script={t.script} />
+        <p className="lead reveal">{t.lead}</p>
         <div className="about__body reveal">
-          <p>
-            Вече години създавам съдържание за брандове и за себе си: от идеята и сценария до кадъра, монтажа и резултата. Работила съм като SMM специалист, UGC creator и видеограф с малки бизнеси и големи брандове.
-          </p>
-          <p>
-            Знам колко е объркващо в началото — затова събрах в една система всичко, което работи: как да изградиш личен бранд, да създаваш съдържание, което продава, и да превърнеш уменията си в професия.
-          </p>
+          {t.body.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
         </div>
-        <Stats />
+        <Stats stats={stats} sample={sample} />
         <Script className="about__sign" size="md">
-          with love, Leri
+          {t.sign}
         </Script>
       </div>
     </section>
