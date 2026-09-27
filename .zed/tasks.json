@@ -1,0 +1,25 @@
+// Zed tasks for this repo. Open the task list with `task: spawn` (default keybinding `alt-shift-t`).
+[
+  {
+    "label": "web: dev",
+    "command": "npm run dev",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/web",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "web: build",
+    "command": "npm run build",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/web",
+    "use_new_terminal": true,
+    "reveal": "always"
+  },
+  {
+    "label": "web: lint",
+    "command": "npm run lint",
+    "cwd": "$ZED_WORKTREE_ROOT/apps/web",
+    "use_new_terminal": true,
+    "reveal": "always"
+  }
+]
