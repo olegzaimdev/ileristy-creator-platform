@@ -1,0 +1,6 @@
+# oh-my-claudecode runtime state (project skills stay committable)
+.omc/*
+!.omc/skills/
+
+# local-only design notes
+DESIGN.md
