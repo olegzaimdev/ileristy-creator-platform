@@ -1,10 +1,10 @@
 import { legal, nav, socials } from "../../content";
-import { Script } from "../ui/Script";
+import { Script } from "@/components/ui";
 
 export function Footer() {
   return (
     <footer id="contacts" className="site-footer">
-      <div className="container site-footer__grid">
+      <div className="page-container site-footer__grid">
         <div className="site-footer__brand">
           <p className="site-footer__tagline">SMM & UGC обучение за момичета, които искат да създават, да се развиват и да печелят онлайн.</p>
           <Script size="md">with love, Leri</Script>
@@ -42,7 +42,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="container site-footer__bottom">
+      <div className="page-container site-footer__bottom">
         <p className="site-footer__wordmark" aria-hidden="true">
           ILERISTY
         </p>

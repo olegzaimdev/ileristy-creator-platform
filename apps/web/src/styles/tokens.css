@@ -1,9 +1,9 @@
 /*
  * ILERISTY design tokens.
  *
- * Scoped to `.ileristy` because the font variables are injected by next/font on
- * that wrapper. When the design is promoted to production, apply the font
- * variables + `.ileristy` class on <html> in the root layout.
+ * Scoped to `.ileristy` (set on <body> by the root layout) because the
+ * next/font variables they reference are defined on <html>. Colours are
+ * mirrored in app/globals.css for Tailwind utilities — keep them in sync.
  *
  * Breakpoints (use literal values in media queries — custom properties are not
  * allowed there): 1440 desktop · 1280 laptop · 1024 tablet landscape ·
@@ -123,4 +123,10 @@
   --z-header: 40;
   --z-overlay: 60;
   --z-modal: 80;
+}
+
+@media (max-width: 640px) {
+  .ileristy {
+    --header-h: 64px;
+  }
 }

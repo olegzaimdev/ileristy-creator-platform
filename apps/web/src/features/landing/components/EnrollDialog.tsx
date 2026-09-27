@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { Package } from "../../content";
-import { Button } from "./Button";
-import { Modal } from "./Modal";
-import { Script } from "./Script";
+import { Button, Modal, Script } from "@/components/ui";
+import type { Package } from "../content";
 
 /* Enrollment is not open yet: the CTA explains the next step instead of faking a checkout. */
 export function EnrollDialog({ pkg, label, variant = "primary" }: { pkg: Package; label: string; variant?: "primary" | "secondary" | "inverse" }) {

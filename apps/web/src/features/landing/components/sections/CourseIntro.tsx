@@ -1,8 +1,5 @@
 import { modules } from "../../content";
-import { Button } from "../ui/Button";
-import { ImageCard } from "../ui/ImageCard";
-import { Script } from "../ui/Script";
-import { SectionTitle } from "../ui/SectionTitle";
+import { Button, ImageCard, Script, SectionTitle } from "@/components/ui";
 
 /* Laptop + phone are drawn in CSS so the course platform can be shown before real screenshots exist. */
 function LaptopMockup() {
@@ -38,7 +35,7 @@ function LaptopMockup() {
 export function CourseIntro() {
   return (
     <section id="course" className="course-intro section" aria-labelledby="course-title">
-      <div className="course-intro__panel container">
+      <div className="course-intro__panel page-container">
         <div className="course-intro__copy">
           <SectionTitle
             id="course-title"

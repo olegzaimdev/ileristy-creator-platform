@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Great_Vibes, Manrope } from "next/font/google";
+// Order matters: Tailwind (layer order) → tokens → base → components.
 import "./globals.css";
-import "@/features/landing/styles/tokens.css";
-import "@/features/landing/styles/landing.css";
+import "@/styles/tokens.css";
+import "@/styles/base.css";
+import "@/styles/components.css";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",

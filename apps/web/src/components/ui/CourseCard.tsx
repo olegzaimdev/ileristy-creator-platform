@@ -1,8 +1,9 @@
-import type { Benefit } from "../../content";
 import { Badge } from "./Badge";
-import { Icon } from "./Icon";
+import { Icon, type IconName } from "./Icon";
 
-export function CourseCard({ icon, title, text, tier, index }: Benefit & { index: number }) {
+export type CourseCardProps = { icon: IconName; title: string; text: string; tier?: string; index: number };
+
+export function CourseCard({ icon, title, text, tier, index }: CourseCardProps) {
   return (
     <article className="course-card reveal">
       <div className="course-card__top">

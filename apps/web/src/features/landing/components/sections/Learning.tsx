@@ -1,10 +1,9 @@
 import { topics } from "../../content";
-import { ImageCard } from "../ui/ImageCard";
-import { SectionTitle } from "../ui/SectionTitle";
+import { ImageCard, SectionTitle } from "@/components/ui";
 
 export function Learning() {
   return (
-    <section className="learning section container" aria-labelledby="learning-title">
+    <section className="learning section page-container" aria-labelledby="learning-title">
       <SectionTitle
         id="learning-title"
         index="04"

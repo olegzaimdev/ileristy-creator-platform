@@ -1,0 +1,182 @@
+/* Design-system reference page (/design-preview/system). */
+@layer theme, base, components, utilities;
+
+@layer components {
+  /* ================================================================
+     Design-system reference page (/design-preview/system)
+     ================================================================ */
+  .ds {
+    display: grid;
+    gap: var(--space-24);
+    padding-block: var(--space-16) var(--space-32);
+  }
+
+  .ds code {
+    font-family: ui-monospace, "SFMono-Regular", monospace;
+    font-size: 0.8125rem;
+  }
+
+  .ds__intro {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-6);
+  }
+
+  .ds__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-display);
+  }
+
+  .ds__section {
+    display: grid;
+    gap: var(--space-10);
+    padding-top: var(--space-10);
+    border-top: 1px solid var(--line);
+  }
+
+  .ds__swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .ds__swatch {
+    display: grid;
+    align-content: start;
+    gap: var(--space-1);
+    font-size: var(--fs-small);
+  }
+
+  .ds__swatch span {
+    aspect-ratio: 4 / 3;
+    margin-bottom: var(--space-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+  }
+
+  .ds__swatch small {
+    color: var(--muted);
+  }
+
+  .ds__type-row {
+    display: grid;
+    grid-template-columns: 16rem 1fr;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ds__type-row small {
+    display: block;
+    color: var(--muted);
+    font-size: var(--fs-caption);
+  }
+
+  .ds__type-sample--display {
+    font-family: var(--font-display);
+    line-height: 1;
+  }
+
+  .ds__type-sample--script {
+    color: var(--accent-hover);
+    font-family: var(--font-script);
+    line-height: 1.1;
+  }
+
+  .ds__type-sample--nav {
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--ls-nav);
+  }
+
+  .ds__tokens {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-8);
+  }
+
+  .ds__tokens ul {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .ds__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .ds__row--dark {
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    background: var(--surface-inverse);
+    --focus: var(--focus-inverse);
+  }
+
+  .ds__form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 760px;
+    gap: var(--space-6);
+  }
+
+  .ds__images {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: end;
+    gap: var(--space-5);
+  }
+
+  .ds__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: var(--space-8);
+  }
+
+  .ds__pricing {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+    padding-top: var(--space-10);
+  }
+
+  .ds__label {
+    margin-bottom: var(--space-4);
+    color: var(--muted);
+    font-size: var(--fs-caption);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+  }
+
+  .ds__form-wide {
+    grid-column: 1 / -1;
+  }
+
+  .ds__reviews > .review {
+    flex: 0 1 340px;
+  }
+
+  .ds__reviews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 900px) {
+    .ds__type-row,
+    .ds__cards,
+    .ds__form,
+    .ds__pricing {
+      grid-template-columns: 1fr;
+    }
+
+    .ds__images {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}

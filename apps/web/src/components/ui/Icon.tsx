@@ -1,4 +1,4 @@
-import type { IconName } from "../../content";
+export type IconName = "lessons" | "support" | "community" | "templates" | "practice" | "feedback";
 
 /* Hand-drawn 1.2px line set on a 32px grid — deliberately thin and irregular. */
 const paths: Record<IconName | "check" | "plus" | "sparkle" | "arrow-left" | "arrow-right" | "close", string> = {

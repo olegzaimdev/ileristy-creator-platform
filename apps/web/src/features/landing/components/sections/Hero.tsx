@@ -1,13 +1,9 @@
 import { hero } from "../../content";
-import { SampleTag } from "../ui/Badge";
-import { Button } from "../ui/Button";
-import { Icon } from "../ui/Icon";
-import { ImageCard } from "../ui/ImageCard";
-import { Script } from "../ui/Script";
+import { Button, Icon, ImageCard, SampleTag, Script } from "@/components/ui";
 
 export function Hero() {
   return (
-    <section className="hero container" aria-labelledby="hero-title">
+    <section className="hero page-container" aria-labelledby="hero-title">
       <div className="hero__media">
         <div className="hero__backdrop" aria-hidden="true" />
         <ImageCard

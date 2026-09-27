@@ -1,11 +1,9 @@
-import { Script } from "../ui/Script";
-import { SectionTitle } from "../ui/SectionTitle";
-import { ImageCard } from "../ui/ImageCard";
 import { Stats } from "./Stats";
+import { ImageCard, Script, SectionTitle } from "@/components/ui";
 
 export function About() {
   return (
-    <section id="about" className="about section container" aria-labelledby="about-title">
+    <section id="about" className="about section page-container" aria-labelledby="about-title">
       <div className="about__collage">
         <ImageCard className="about__portrait" alt="Портрет на Валерия" caption="Портрет" tone="rose" shape="arch" ratio="3 / 4" parallax />
         <ImageCard className="about__lifestyle" alt="Валерия пътува с камера в ръка" caption="Lifestyle" tone="taupe" shape="rounded" ratio="4 / 5" mono />

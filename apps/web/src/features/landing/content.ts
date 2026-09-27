@@ -4,6 +4,8 @@
  * DESIGN.md "Never insert fake testimonials, results, …".
  */
 
+import type { CourseCardProps, Module, Review, StatCardProps } from "@/components/ui";
+
 export type NavItem = { label: string; href: string };
 
 export const nav: NavItem[] = [
@@ -24,7 +26,7 @@ export const hero = {
 
 export const tickerWords = ["Стратегия", "Reels", "UGC", "Stories", "Брандове", "Клиенти", "Личен бранд", "Монтаж"];
 
-export type Stat = { value: string; label: string; sample?: boolean };
+export type Stat = Omit<StatCardProps, "inverse">;
 
 export const stats: Stat[] = [
   { value: "4+", label: "години опит", sample: true },
@@ -32,9 +34,7 @@ export const stats: Stat[] = [
   { value: "100+", label: "бранда и проекта", sample: true },
 ];
 
-export type IconName = "lessons" | "support" | "community" | "templates" | "practice" | "feedback";
-
-export type Benefit = { icon: IconName; title: string; text: string; tier?: string };
+export type Benefit = Omit<CourseCardProps, "index">;
 
 export const benefits: Benefit[] = [
   { icon: "lessons", title: "Практически уроци", text: "Кратки, ясни уроци без излишна теория — гледаш и веднага прилагаш." },
@@ -63,15 +63,6 @@ export const topics: Topic[] = [
   { key: "05", title: "Sales", items: ["Продажба на услуги", "Ценообразуване", "Преговори"] },
   { key: "06", title: "Personal brand", items: ["Позициониране", "Визия", "Контент система"] },
 ];
-
-export type Module = {
-  number: string;
-  title: string;
-  lessons: string[];
-  duration: string;
-  homework: string;
-  materials: string[];
-};
 
 /* Proposed structure — the published syllabus is still pending. */
 export const modules: Module[] = [
@@ -210,13 +201,6 @@ export const metrics: Stat[] = [
   { value: "New career", label: "нова професия", sample: true },
   { value: "Remote", label: "работа отвсякъде", sample: true },
 ];
-
-export type Review =
-  | { kind: "quote"; name: string; handle: string; role: string; quote: string; metric?: string }
-  | { kind: "chat"; name: string; handle: string; messages: { from: "me" | "them"; text: string }[]; metric: string }
-  | { kind: "photo"; name: string; handle: string; caption: string; metric: string; tone: ImageTone };
-
-export type ImageTone = "blush" | "taupe" | "espresso" | "ivory" | "rose";
 
 export const reviews: Review[] = [
   {

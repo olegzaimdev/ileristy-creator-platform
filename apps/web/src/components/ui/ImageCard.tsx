@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import type { ImageTone } from "../../content";
+
+export type ImageTone = "blush" | "rose" | "taupe" | "ivory" | "espresso";
 
 type ImageCardProps = {
   alt: string;

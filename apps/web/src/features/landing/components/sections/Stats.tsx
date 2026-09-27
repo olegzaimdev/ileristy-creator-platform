@@ -1,5 +1,5 @@
 import { stats } from "../../content";
-import { StatCard } from "../ui/StatCard";
+import { StatCard } from "@/components/ui";
 
 export function Stats() {
   return (

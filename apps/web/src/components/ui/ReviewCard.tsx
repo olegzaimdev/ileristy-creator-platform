@@ -1,6 +1,10 @@
-import type { Review } from "../../content";
 import { SampleTag } from "./Badge";
-import { ImageCard } from "./ImageCard";
+import { ImageCard, type ImageTone } from "./ImageCard";
+
+export type Review =
+  | { kind: "quote"; name: string; handle: string; role: string; quote: string; metric?: string }
+  | { kind: "chat"; name: string; handle: string; messages: { from: "me" | "them"; text: string }[]; metric: string }
+  | { kind: "photo"; name: string; handle: string; caption: string; metric: string; tone: ImageTone };
 
 function Author({ name, handle }: { name: string; handle: string }) {
   return (

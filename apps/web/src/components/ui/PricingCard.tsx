@@ -1,12 +1,26 @@
-import type { Package } from "../../content";
+import type { ReactNode } from "react";
 import { Badge } from "./Badge";
-import { EnrollDialog } from "./EnrollDialog";
 import { Icon } from "./Icon";
 import { Script } from "./Script";
 
-export function PricingCard({ pkg }: { pkg: Package }) {
-  const { code, descriptor, promise, features, cta, badge, featured, accent } = pkg;
-  const headingId = `pkg-${code.toLowerCase()}`;
+export type PricingCardProps = {
+  /** Tier label, e.g. "PRO". Always paired with a descriptor (DESIGN.md). */
+  name: string;
+  descriptor: string;
+  promise: string;
+  features: string[];
+  /** Price as returned by the backend, or a pending message. */
+  price: ReactNode;
+  priceNote?: string;
+  /** The CTA — a Button, a link or a dialog trigger supplied by the feature. */
+  action: ReactNode;
+  badge?: string;
+  featured?: boolean;
+  accent?: string;
+};
+
+export function PricingCard({ name, descriptor, promise, features, price, priceNote, action, badge, featured, accent }: PricingCardProps) {
+  const headingId = `pkg-${name.toLowerCase().replace(/\W+/g, "-")}`;
 
   return (
     <article className={featured ? "pricing-card pricing-card--featured reveal" : "pricing-card reveal"} aria-labelledby={headingId}>
@@ -18,7 +32,7 @@ export function PricingCard({ pkg }: { pkg: Package }) {
           </Script>
         )}
         <h3 id={headingId} className="pricing-card__name">
-          {code}
+          {name}
         </h3>
         <p className="pricing-card__descriptor">{descriptor}</p>
       </div>
@@ -33,10 +47,10 @@ export function PricingCard({ pkg }: { pkg: Package }) {
       </ul>
       <div className="pricing-card__footer">
         <p className="pricing-card__price">
-          Цената предстои
-          <small>Еднократно плащане · EUR</small>
+          {price}
+          {priceNote && <small>{priceNote}</small>}
         </p>
-        <EnrollDialog pkg={pkg} variant={featured ? "primary" : "secondary"} label={cta} />
+        {action}
       </div>
     </article>
   );

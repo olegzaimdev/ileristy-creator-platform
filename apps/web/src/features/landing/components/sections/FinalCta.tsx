@@ -1,11 +1,9 @@
-import { Button } from "../ui/Button";
-import { ImageCard } from "../ui/ImageCard";
-import { Script } from "../ui/Script";
+import { Button, ImageCard, Script } from "@/components/ui";
 
 export function FinalCta() {
   return (
     <section className="final-cta" aria-labelledby="final-title">
-      <div className="final-cta__frame container">
+      <div className="final-cta__frame page-container">
         <ImageCard className="final-cta__image" alt="Валерия на залез с камера в ръка" tone="espresso" shape="square" ratio="auto" parallax />
         <div className="final-cta__content">
           <Script className="final-cta__script">създавай. развивай се. печели.</Script>

@@ -1,15 +1,23 @@
-import { modules, packages, reviews } from "../content";
-import { Badge, SampleTag } from "./ui/Badge";
-import { Button } from "./ui/Button";
-import { CourseCard } from "./ui/CourseCard";
-import { ImageCard } from "./ui/ImageCard";
-import { ModalDemo } from "./ui/ModalDemo";
-import { ModuleAccordion } from "./ui/ModuleAccordion";
-import { PricingCard } from "./ui/PricingCard";
-import { ReviewCard } from "./ui/ReviewCard";
-import { Script } from "./ui/Script";
-import { SectionTitle } from "./ui/SectionTitle";
-import { StatCard } from "./ui/StatCard";
+import {
+  AccordionItem,
+  Badge,
+  Button,
+  Checkbox,
+  CourseCard,
+  ImageCard,
+  Input,
+  ModuleAccordion,
+  PricingCard,
+  ReviewCard,
+  SampleTag,
+  Script,
+  SectionTitle,
+  Select,
+  StatCard,
+  Textarea,
+} from "@/components/ui";
+import { modules, packages, reviews } from "@/features/landing/content";
+import { ModalDemo } from "./ModalDemo";
 
 const colors = [
   ["Warm Ivory", "--color-ivory", "#F7F2EC", "Основен фон"],
@@ -41,7 +49,7 @@ const tokenGroups: [string, string[]][] = [
 
 export function DesignSystem() {
   return (
-    <main className="ds container">
+    <main className="ds page-container">
       <header className="ds__intro">
         <p className="eyebrow">ILERISTY · Design system v1</p>
         <h1 className="ds__title">
@@ -49,7 +57,7 @@ export function DesignSystem() {
         </h1>
         <Script>with love, Leri</Script>
         <p className="section-title__lead">
-          Токени и компоненти за Next.js реализацията. Всички стойности живеят в <code>features/landing/styles/tokens.css</code>.
+          Токени и компоненти за Next.js реализацията. Токените са в <code>src/styles/tokens.css</code>, компонентите — в <code>src/components/ui</code>.
         </p>
         <Button href="/design-preview" variant="secondary" arrow>
           Към landing страницата
@@ -96,7 +104,7 @@ export function DesignSystem() {
         <div className="ds__tokens">
           {tokenGroups.map(([group, items]) => (
             <div key={group}>
-              <h3 className="site-footer__label">{group}</h3>
+              <h3 className="ds__label">{group}</h3>
               <ul>
                 {items.map((item) => (
                   <li key={item}>
@@ -134,25 +142,47 @@ export function DesignSystem() {
       </section>
 
       <section className="ds__section">
-        <SectionTitle title="Полета" eyebrow="05 · Input" />
-        <form className="ds__form" action="#" aria-label="Примерна форма — не изпраща данни">
-          <label className="field">
-            <span className="field__label">Име</span>
-            <input className="field__input" name="name" placeholder="Валерия" autoComplete="off" />
-            <span className="field__hint">Default / focus — натисни Tab</span>
-          </label>
-          <label className="field">
-            <span className="field__label">Имейл</span>
-            <input className="field__input" name="email" defaultValue="valeria@" aria-invalid="true" aria-describedby="email-error" />
-            <span id="email-error" className="field__hint field__hint--error">
-              Въведи валиден имейл адрес
-            </span>
-          </label>
-          <label className="field">
-            <span className="field__label">Пакет</span>
-            <input className="field__input" name="package" value="PREMIUM" disabled readOnly />
-            <span className="field__hint">Disabled</span>
-          </label>
+        <SectionTitle
+          title="Форми"
+          eyebrow="05 · Input · Select · Textarea · Checkbox"
+          lead="Примерна форма за контакт по CreateContactRequest. Демо — не изпраща данни."
+        />
+        <form className="ds__form" aria-label="Примерна форма за контакт" noValidate>
+          <Input name="firstName" label="Име" placeholder="Валерия" autoComplete="given-name" required />
+          <Input name="lastName" label="Фамилия" placeholder="Иванова" autoComplete="family-name" required />
+          <Input
+            name="email"
+            type="email"
+            label="Имейл"
+            defaultValue="valeria@"
+            autoComplete="email"
+            required
+            error="Въведи валиден имейл адрес"
+          />
+          <Input name="phone" type="tel" label="Телефон" placeholder="+359 88 123 4567" autoComplete="tel" hint="С код на държавата" />
+          <Select
+            name="package"
+            label="Пакет"
+            placeholder="Избери пакет"
+            defaultValue=""
+            options={packages.map((pkg) => ({ value: pkg.code, label: `${pkg.code} — ${pkg.descriptor}` }))}
+          />
+          <Input name="disabled" label="Поток" value="Предстои" disabled readOnly hint="Disabled" />
+          <Textarea name="message" label="Съобщение" placeholder="Разкажи ми накратко за целите си…" className="ds__form-wide" />
+          <Checkbox
+            name="marketingConsent"
+            className="ds__form-wide"
+            label="Съгласна съм да получавам новини за курса. Мога да се отпиша по всяко време."
+            hint="По желание"
+          />
+          <div className="ds__form-wide ds__row">
+            <Button type="button" arrow>
+              Изпрати
+            </Button>
+            <Button type="button" variant="secondary">
+              Отказ
+            </Button>
+          </div>
         </form>
       </section>
 
@@ -176,9 +206,25 @@ export function DesignSystem() {
             <StatCard value="100+" label="бранда" sample />
           </dl>
         </div>
-        <div className="pricing__grid ds__pricing">
+        <div className="ds__pricing">
           {packages.map((pkg) => (
-            <PricingCard key={pkg.code} pkg={pkg} />
+            <PricingCard
+              key={pkg.code}
+              name={pkg.code}
+              descriptor={pkg.descriptor}
+              promise={pkg.promise}
+              features={pkg.features}
+              badge={pkg.badge}
+              featured={pkg.featured}
+              accent={pkg.accent}
+              price="Цената предстои"
+              priceNote="Еднократно плащане · EUR"
+              action={
+                <Button variant={pkg.featured ? "primary" : "secondary"} block arrow>
+                  {pkg.cta}
+                </Button>
+              }
+            />
           ))}
         </div>
         <div className="ds__reviews">
@@ -190,6 +236,11 @@ export function DesignSystem() {
 
       <section className="ds__section">
         <SectionTitle title="Accordion и modal" eyebrow="08 · ModuleAccordion · Modal" />
+        <div>
+          <AccordionItem title={<span>Обикновен AccordionItem</span>} name="ds-faq">
+            <p>Използва се за ЧЗВ, сравнения и всякакво съдържание при поискване.</p>
+          </AccordionItem>
+        </div>
         <ModuleAccordion modules={modules.slice(0, 3)} name="ds-modules" />
         <div className="ds__row">
           <ModalDemo />

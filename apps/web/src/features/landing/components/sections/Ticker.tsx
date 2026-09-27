@@ -1,5 +1,5 @@
 import { tickerWords } from "../../content";
-import { Icon } from "../ui/Icon";
+import { Icon } from "@/components/ui";
 
 export function Ticker() {
   return (

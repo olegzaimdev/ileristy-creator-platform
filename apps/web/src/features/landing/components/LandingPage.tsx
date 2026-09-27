@@ -1,3 +1,4 @@
+import "../styles/landing.css";
 import { About } from "./sections/About";
 import { Audience } from "./sections/Audience";
 import { Benefits } from "./sections/Benefits";
@@ -16,7 +17,7 @@ import { Ticker } from "./sections/Ticker";
 
 export function LandingPage() {
   return (
-    <>
+    <div className="landing">
       <a className="skip-link" href="#main">
         Към съдържанието
       </a>
@@ -38,6 +39,6 @@ export function LandingPage() {
         <FinalCta />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

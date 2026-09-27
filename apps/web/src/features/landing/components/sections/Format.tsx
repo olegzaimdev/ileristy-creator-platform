@@ -1,10 +1,10 @@
 import { journey } from "../../content";
-import { SectionTitle } from "../ui/SectionTitle";
+import { SectionTitle } from "@/components/ui";
 
 export function Format() {
   return (
     <section className="format section" aria-labelledby="format-title">
-      <div className="container">
+      <div className="page-container">
         <SectionTitle id="format-title" eyebrow="Формат" title="Как протича обучението" script="стъпка по стъпка" align="center" />
         <ol className="roadmap">
           {journey.map((step, i) => (

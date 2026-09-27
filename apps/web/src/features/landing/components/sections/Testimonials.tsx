@@ -2,10 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { metrics, reviews } from "../../content";
-import { Icon } from "../ui/Icon";
-import { ReviewCard } from "../ui/ReviewCard";
-import { SectionTitle } from "../ui/SectionTitle";
-import { StatCard } from "../ui/StatCard";
+import { Icon, ReviewCard, SectionTitle, StatCard } from "@/components/ui";
 
 export function Testimonials() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -33,7 +30,7 @@ export function Testimonials() {
 
   return (
     <section id="results" className="results section" aria-labelledby="results-title">
-      <div className="container">
+      <div className="page-container">
         <div className="results__head">
           <SectionTitle id="results-title" index="07" eyebrow="Социално доказателство" title="Резултати на ученичките" script="истории, които вдъхновяват" />
           <div className="slider-controls">

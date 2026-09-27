@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { nav } from "../../content";
-import { Button } from "../ui/Button";
-import { Script } from "../ui/Script";
+import { Button, Script } from "@/components/ui";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -50,7 +49,7 @@ export function Header() {
 
   return (
     <header className="site-header" data-scrolled={scrolled || undefined} data-menu-open={menuOpen || undefined}>
-      <div className="site-header__inner container">
+      <div className="site-header__inner page-container">
         <a className="wordmark" href="#top" aria-label="ILERISTY — към началото">
           ILERISTY
         </a>

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
- * Brand tokens live in features/landing/styles/tokens.css (scoped to `.ileristy`,
+ * Brand tokens live in src/styles/tokens.css (scoped to `.ileristy`,
  * which the root layout puts on <body>). The palette is mirrored here so
  * Tailwind utilities (bg-ivory, text-espresso, font-serif…) stay on-brand —
  * keep both files in sync.

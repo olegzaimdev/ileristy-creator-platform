@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { DesignSystem } from "@/features/landing/components/DesignSystem";
+import "./system.css";
+import { DesignSystem } from "./_components/DesignSystem";
 
 export const metadata: Metadata = { title: "ILERISTY — дизайн система" };
 
