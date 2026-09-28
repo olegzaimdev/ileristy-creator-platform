@@ -3,9 +3,11 @@ export type ContactFormDictionary = {
   lastName: string;
   phoneNumber: string;
   email: string;
+  marketingConsent: string;
   submit: string;
   submitting: string;
   success: string;
+  duplicate: string;
   error: string;
 };
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button, Modal, Script } from "@/components/ui";
 import type { LandingDictionary, Package } from "../types";
-import { ContactForm } from "@/features/contacts/components/ContactForms";
+import { ContactForm } from "@/features/contacts/components/ContactForm";
 
 type EnrollDialogProps = {
   pkg: Package;
