@@ -1,4 +1,5 @@
 import type { CourseCardProps, Module, Review } from "@/components/ui";
+import type { ContactFormDictionary } from "@/features/contacts/types/contact";
 
 export type NavItem = { label: string; href: string };
 export type Stat = { value: string; label: string; sample?: boolean };
@@ -83,7 +84,7 @@ export type LandingDictionary = {
     packages: Package[];
     comparison: { row: string; includes: [boolean, boolean, boolean] }[];
   };
-  enroll: { title: string; text: string; script: string; telegram: string; back: string };
+  enroll: { title: string; text: string; script: string; telegram: string; back: string; contactForm: ContactFormDictionary };
   results: { eyebrow: string; title: string; script: string; prev: string; next: string; trackLabel: string; metrics: Stat[]; reviews: Review[] };
   faq: { eyebrow: string; title: string; script: string; note: string; cta: string; items: Faq[] };
   finalCta: { imageAlt: string; script: string; title: [string, string]; lead: string; cta: string };
