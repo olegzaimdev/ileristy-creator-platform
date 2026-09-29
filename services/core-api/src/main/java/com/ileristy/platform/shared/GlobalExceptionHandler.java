@@ -1,6 +1,7 @@
 package com.ileristy.platform.shared;
 
 import com.ileristy.platform.contact.DuplicateContactException;
+import com.ileristy.platform.courses.CourseNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
 
         problem.setTitle("Contact already exists");
+
+        return problem;
+    }
+
+    @ExceptionHandler(CourseNotFoundException.class)
+    public ProblemDetail handleCourseNotFound(
+            CourseNotFoundException exception
+    ) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                HttpStatus.NOT_FOUND,
+                exception.getMessage()
+        );
+
+        problem.setTitle("Course not found");
 
         return problem;
     }
