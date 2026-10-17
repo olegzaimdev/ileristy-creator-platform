@@ -12,3 +12,10 @@ export function plural(locale: Locale, count: number, forms: PluralForms) {
 export function template(text: string, values: Record<string, string | number>) {
   return text.replace(/\{(\w+)\}/g, (match, key: string) => (key in values ? String(values[key]) : match));
 }
+
+/** `money("bg", 49000, "EUR")` → "490,00 €". `amountMinor` is in the currency's minor unit (cents). */
+export function money(locale: Locale, amountMinor: number, currency: string) {
+  const format = new Intl.NumberFormat(htmlLang[locale], { style: "currency", currency });
+  const { maximumFractionDigits = 2 } = format.resolvedOptions();
+  return format.format(amountMinor / 10 ** maximumFractionDigits);
+}

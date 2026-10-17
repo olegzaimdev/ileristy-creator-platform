@@ -1,10 +1,22 @@
 import { AccordionItem, Icon, PricingCard, SectionTitle } from "@/components/ui";
+import type { PackageResponse } from "@/features/course/types/course";
+import type { Locale } from "@/i18n/config";
+import { money } from "@/i18n/format";
 import type { LandingDictionary } from "../../types";
 import { EnrollDialog } from "../EnrollDialog";
 
-type PricingProps = { t: LandingDictionary["pricing"]; enroll: LandingDictionary["enroll"]; closeLabel: string };
+type PricingProps = {
+  t: LandingDictionary["pricing"];
+  enroll: LandingDictionary["enroll"];
+  closeLabel: string;
+  /** Prices from the API, matched to dictionary packages by `code`. */
+  packages: PackageResponse[];
+  locale: Locale;
+};
 
-export function Pricing({ t, enroll, closeLabel }: PricingProps) {
+export function Pricing({ t, enroll, closeLabel, packages, locale }: PricingProps) {
+  const prices = new Map(packages.map((pkg) => [pkg.code, money(locale, pkg.priceAmountMinor, pkg.currency)]));
+
   return (
     <section id="pricing" className="pricing section" aria-labelledby="pricing-title">
       <div className="page-container">
@@ -20,7 +32,7 @@ export function Pricing({ t, enroll, closeLabel }: PricingProps) {
               badge={pkg.badge}
               featured={pkg.featured}
               accent={pkg.accent}
-              price={t.price}
+              price={prices.get(pkg.code) ?? t.price}
               priceNote={t.priceNote}
               action={<EnrollDialog pkg={pkg} t={enroll} closeLabel={closeLabel} variant={pkg.featured ? "primary" : "secondary"} />}
             />
