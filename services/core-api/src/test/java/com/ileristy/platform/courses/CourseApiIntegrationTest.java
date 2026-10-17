@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Testcontainers
-@SpringBootTest
+@SpringBootTest(properties = "spring.liquibase.contexts=test")
 @AutoConfigureMockMvc
 class CourseApiIntegrationTest {
 
