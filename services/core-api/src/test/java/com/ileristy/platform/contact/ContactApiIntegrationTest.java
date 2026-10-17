@@ -146,7 +146,7 @@ class ContactApiIntegrationTest {
                   "marketingConsent": true
                 }
                 """;
-        mockMvc.perform(      post("/api/contacts")
+        mockMvc.perform(post("/api/contacts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody)
         ).andExpect(status().isBadRequest());
