@@ -35,7 +35,7 @@ public class CoursePackage {
     private String description;
 
     @Column(nullable = false)
-    private boolean active = true;
+    private boolean active;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)

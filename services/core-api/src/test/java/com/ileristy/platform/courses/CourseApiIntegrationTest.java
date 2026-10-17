@@ -75,4 +75,37 @@ class CourseApiIntegrationTest {
                 .andExpect(jsonPath("$.nextCohort.capacity").value(10));
     }
 
+    @Test
+    void shouldReturnNotFoundWhenCourseDoesNotExist() throws Exception {
+        mockMvc.perform(get("/api/courses/non-existent"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldReturnCourseWithoutNextCohort() throws Exception {
+        Long courseId = jdbcTemplate.queryForObject("""
+        INSERT INTO course (slug, name, description)
+        VALUES ('ugc-smm-2', 'UGC & SMM', 'Test course')
+        RETURNING id
+        """, Long.class);
+
+        jdbcTemplate.update("""
+        INSERT INTO course_package
+            (course_id, code, name, price_amount_minor, currency, active)
+        VALUES
+            (?, 'PRO', 'Pro', 19900, 'EUR', true)
+        """, courseId);
+
+        jdbcTemplate.update("""
+        INSERT INTO cohort (course_id, starts_at, ends_at, capacity)
+        VALUES
+            (?, now() - interval '30 days', now() - interval '1 day', 99)
+        """, courseId);
+
+        // Act + Assert
+        mockMvc.perform(get("/api/courses/ugc-smm-2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nextCohort").value(nullValue()));
+    }
+
 }
