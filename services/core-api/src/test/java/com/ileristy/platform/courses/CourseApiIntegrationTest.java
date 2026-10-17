@@ -60,9 +60,9 @@ class CourseApiIntegrationTest {
         jdbcTemplate.update("""
         INSERT INTO cohort (course_id, starts_at, ends_at, capacity)
         VALUES
-            (?, now(), now() + interval '30 days', 99),
-            (?, now(), now() + interval '30 days', 15),
-            (?, now(), now() + interval '30 days', 10)
+            (?, now() - interval '30 days', now() - interval '1 day', 99),
+            (?, now() + interval '60 days', now() + interval '90 days', 15),
+            (?, now() + interval '14 days', now() + interval '44 days', 10)
         """, courseId, courseId, courseId);
 
         // Act + Assert
@@ -71,7 +71,8 @@ class CourseApiIntegrationTest {
                 .andExpect(jsonPath("$.slug").value("ugc-smm"))
                 .andExpect(jsonPath("$.packages.length()").value(2))
                 .andExpect(jsonPath("$.packages[0].code").value("START"))
-                .andExpect(jsonPath("$.packages[1].code").value("PRO"));
+                .andExpect(jsonPath("$.packages[1].code").value("PRO"))
+                .andExpect(jsonPath("$.nextCohort.capacity").value(10));
     }
 
 }
